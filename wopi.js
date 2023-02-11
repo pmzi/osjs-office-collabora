@@ -43,6 +43,9 @@ async function discovery({OFFICE_BASE_URL, req, res}) {
           '/wopi-discovery/net-zone/app[@name=\'' + mimeType + '\']/action',
           doc
         );
+        nodes.forEach((node)=>{
+          console.log(node.getAttribute('urlsrc'));
+        });
         if (!nodes || nodes.length !== 1) {
           err = 'The requested mime type is not handled';
           res.status(404).send(err);
@@ -51,7 +54,7 @@ async function discovery({OFFICE_BASE_URL, req, res}) {
         }
         let urlSrc = nodes[0].getAttribute('urlsrc');
         res.json({
-          url: urlSrc
+          url: urlSrc.replace('cool.html', 'framed.doc.html')
         });
       });
       response.on('error', (err) => {
