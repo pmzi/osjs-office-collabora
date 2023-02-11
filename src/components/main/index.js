@@ -34,21 +34,25 @@ export default function Main(props) {
     discover();
 
     window.addEventListener('message', (event)=>{
-      let msg = JSON.parse(event.data);
-      console.log(msg);
-      if (!msg) {
-        return;
-      }
-      if (msg.MessageId === 'App_LoadingStatus') {
-        if (msg.Values) {
-          if (msg.Values.Status == 'Document_Loaded') {
-            post({'MessageId': 'Host_PostmessageReady'});
+      try {
+        let msg = JSON.parse(event.data);
+        console.log(msg);
+        if (!msg) {
+          return;
+        }
+        if (msg.MessageId === 'App_LoadingStatus') {
+          if (msg.Values) {
+            if (msg.Values.Status == 'Document_Loaded') {
+              post({'MessageId': 'Host_PostmessageReady'});
 
-            post({'MessageId': 'Insert_Button',
-              'Values': {'id': 'Pouya', 'imgurl': ham, 'hint': '', 'mobile': false, 'label': 'Show additional btns via Insert_Button', 'insertBefore': 'Save'}
-            }, '*');
+              post({'MessageId': 'Insert_Button',
+                'Values': {'id': 'Pouya', 'imgurl': ham, 'hint': '', 'mobile': false, 'label': 'Show additional btns via Insert_Button', 'insertBefore': 'Save', 'unoCommand': '.uno:InspectSelectedObject	'}
+              }, '*');
+            }
           }
         }
+      }catch {
+        // Not a Collabora message
       }
     }, false);
   }, []);
