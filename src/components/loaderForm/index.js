@@ -23,6 +23,12 @@ export default function LoaderForm(props) {
           type="hidden"
           id="access-token"
         />
+        <input
+          name="postmessage_origin"
+          value="http://192.168.1.103:8000"
+          type="hidden"
+          id="postmessage_origin"
+        />
         <input type="submit" value="" />
       </form>
     </div>
