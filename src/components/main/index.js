@@ -46,8 +46,15 @@ export default function Main(props) {
               post({'MessageId': 'Host_PostmessageReady'});
 
               post({'MessageId': 'Insert_Button',
-                'Values': {'id': 'Pouya', 'imgurl': ham, 'hint': '', 'mobile': false, 'label': 'Show additional btns via Insert_Button', 'insertBefore': 'Save', 'unoCommand': '.uno:InspectSelectedObject	'}
+                'Values': {'id': 'Pouya', 'imgurl': ham, 'hint': '', 'mobile': false, 'label': 'Show additional btns via Insert_Button', 'insertBefore': 'Save'}
               }, '*');
+            }
+          }
+        }
+        if(msg.MessageId === 'Clicked_Button') {
+          if(msg.Values) {
+            if(msg.Values.id === 'Pouya') {
+              alert('Clicked!');
             }
           }
         }
