@@ -6,6 +6,7 @@ import {useCustomDialog} from '../../hooks/customDialog';
 import './index.scss';
 import CreateFile from '../createFile';
 import BrowseFile from '../browseFile';
+import ham from './ham.svg';
 
 export default function Main(props) {
   const [filePath, setFilePath] = useState(props.data ? props.data.path : null);
@@ -25,8 +26,31 @@ export default function Main(props) {
 
   let tray = null;
 
+  function post(data) {
+    iframeRef.current.contentWindow.postMessage(JSON.stringify(data), '*');
+  }
+
   useEffect(() => {
     discover();
+
+    window.addEventListener('message', (event)=>{
+      let msg = JSON.parse(event.data);
+      console.log(msg);
+      if (!msg) {
+        return;
+      }
+      if (msg.MessageId === 'App_LoadingStatus') {
+        if (msg.Values) {
+          if (msg.Values.Status == 'Document_Loaded') {
+            post({'MessageId': 'Host_PostmessageReady'});
+
+            post({'MessageId': 'Insert_Button',
+              'Values': {'id': 'Pouya', 'imgurl': ham, 'hint': '', 'mobile': false, 'label': 'Show additional btns via Insert_Button', 'insertBefore': 'Save'}
+            }, '*');
+          }
+        }
+      }
+    }, false);
   }, []);
 
   useEffect(() => {
