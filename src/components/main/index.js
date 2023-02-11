@@ -53,7 +53,7 @@ export default function Main(props) {
         }
         if(msg.MessageId === 'Clicked_Button') {
           if(msg.Values) {
-            if(msg.Values.id === 'Pouya') {
+            if(msg.Values.Id === 'Pouya') {
               alert('Clicked!');
             }
           }
